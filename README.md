@@ -18,6 +18,9 @@ Create a class RationalNumber (fractions) with the following capabilities:
  * Overload the addition, subtraction, multiplication and division operators for this class.
  * Overload the input and output stream operators for this class.
  * Overload the relational and equality operators for this class.
+
+## Task 3 - Unary Operator Overloading
+For the RationalNumber class created above, do the following additional functionalities:
  * Overload the unary –(minus) operator for this class e.g. if RationalNumber r1 = 2 / 3, then –r1 = - 2 / 3
  * Overload the pre and post increment/decrement operators for this class e.g. if RationalNumber r1 = 2/3, then r1++ = 5/3 and r1-- = -1 / 3
  * Write the constructor to convert a float type number into rational number.
