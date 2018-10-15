@@ -11,3 +11,10 @@ Use integer variables to represent the **private** data of the class - the **num
   * Dividing two **Rational** numbers. The result should be stored in reduced form.
   * Printing **Rational** numbers in the form **a / b**, where **a** is the numerator and **b** is the denominator.
   * Printing **Rational** numbers in floating-point format.
+  
+## Task 2
+Create a class RationalNumber (fractions) with the following capabilities:
+ * Create a constructor that prevents a 0 denominator in a fraction, reduces or simplifies fractions that are not in reduced form and avoids negative denominators.
+ * Overload the addition, subtraction, multiplication and division operators for this class.
+ * Overload the input and output stream operators for this class.
+ * Overload the relational and equality operators for this class.
