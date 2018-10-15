@@ -9,6 +9,12 @@ RationalNumber::RationalNumber(int num, int den) :numerator(num), denominator(de
 
 }
 
+RationalNumber::RationalNumber(float f) { 
+	numerator = int(f * 10000.0); 
+	denominator = 10000; 
+	ReducedForm(*this); 
+}
+
 void RationalNumber::ReducedForm(RationalNumber &obj) {
 	int Divisor = std::min(abs(obj.numerator), abs(obj.denominator));
 	for (int d = Divisor; d > 1; d--) {
@@ -112,3 +118,32 @@ bool RationalNumber::operator >=(const RationalNumber & r) {
 		return false;
 }
 
+//pre-increment 
+RationalNumber & RationalNumber::operator++(){ 
+	*this += 1; 
+	return *this; 
+} 
+
+//post-increment 
+RationalNumber RationalNumber::operator ++ (int){ 
+	RationalNumber t = *this; 
+	*this += 1; 
+	return t; 
+} 
+
+//pre-decrement 
+RationalNumber & RationalNumber::operator--(){ 
+	*this -= 1; 
+	return *this; 
+} 
+
+//post-decrement 
+RationalNumber RationalNumber::operator -- (int){ 
+	RationalNumber t = *this; 
+	*this -= 1; 
+	return t; 
+}
+
+RationalNumber::operator float() {
+	return float(numerator) / float(denominator);
+}
