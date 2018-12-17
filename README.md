@@ -1,5 +1,5 @@
 # Rational-Numbers---CPP-Class
-Defining class in C++
+Operator overloading concepts in OOP.
 
 ## Task 1 - Defining C++ Class and Member Functions
 Create a class called **Rational** for performing arithmetic with fractions. Write a program to test your class.
