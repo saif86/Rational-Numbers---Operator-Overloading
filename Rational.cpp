@@ -1,64 +1,132 @@
-#include<iostream>
 #include<algorithm>
-#include "Rational.h"
+#include "Rational.h"  // class implemented
+using namespace std;
 
-using std::cout;
+// File scope starts here 
 
-Rational::Rational(int num, int den) :numerator(num), denominator(den) {
-	if (denominator == 0)
-		denominator = 1;
-	ReducedForm(*this);
+/////////////////////////////// PUBLIC ///////////////////////////////////////
 
+//============================= LIFECYCLE ====================================
+
+// Rational Default + Overloaded Constructor
+Rational::Rational(int aNumerator, int aDenominator) : mNumerator(aNumerator), mDenominator(aDenominator) {
+	this->SetRational(aNumerator, aDenominator);
 }
+// end Rational constructor
 
-void Rational::PrintRational() const {
-	cout << numerator << " / " << denominator;
+
+
+//============================= OPERATIONS ===================================
+
+// function that adds two Rational numbers.
+const Rational& Rational::AddRational(const Rational& rRational) {
+	this->SetNumerator((this->GetNumerator() * rRational.GetDenominator()) + (rRational.GetNumerator() * this->GetDenominator()));
+	this->SetDenominator(this->GetDenominator() * rRational.GetDenominator());
+	this->ReducedForm();
+	return *this;
 }
+// end function AddRational
 
-void Rational::PrintRationalFloat() {
-	cout << float(numerator) / float(denominator);
+// function that subtracts two Rational numbers.
+const Rational& Rational::SubtractRational(const Rational& rRational) {
+	this->SetNumerator((this->GetNumerator()*rRational.GetDenominator()) - (rRational.GetNumerator()*this->GetDenominator()));
+	this->SetDenominator(this->GetDenominator()*rRational.GetDenominator());
+	this->ReducedForm();
+	return *this;
 }
+// end function SubtractRational
 
-void Rational::ReducedForm(Rational &obj) {
-	int Divisor = std::min(obj.numerator, obj.denominator);
-	for (int d = Divisor; d > 1; d--) {
-		while ((obj.numerator%d == 0) && (obj.denominator%d == 0)) {
-			obj.numerator /= d;
-			obj.denominator /= d;
+// function that multiplies two Rational numbers.
+const Rational& Rational::MultiplyRational(const Rational& rRational) {
+	this->SetNumerator(this->GetNumerator()*rRational.GetNumerator());
+	this->SetDenominator(this->GetDenominator()*rRational.GetDenominator());
+	this->ReducedForm();
+	return *this;
+}
+// end function MultiplyRational
+
+// function that divides two Rational numbers.
+const Rational& Rational::DivideRational(const Rational& rRational) {
+	this->SetNumerator(this->GetNumerator()*rRational.GetDenominator());
+	this->SetDenominator(this->GetDenominator()*rRational.GetNumerator());
+	this->ReducedForm();
+	return *this;
+}
+// end function DivideRational
+
+// function that prints Rational number in fraction(a/b) form.
+void Rational::PrintFraction() const {
+	cout << this->GetNumerator() << " / " << this->GetDenominator();
+}
+// end function PrintFraction
+
+// function that prints Rational number in floating-point(a.b) form.
+void Rational::PrintFloat() const {
+	cout << (float)this->GetNumerator() /  (float)this->GetDenominator();
+}
+// end function PrintFloat
+
+
+//============================= ACESS      ===================================
+
+// function that sets numerator of Rational Number
+void Rational::SetNumerator(int aNumerator) {
+	this->mNumerator = aNumerator;
+}
+// end function SetNumerator
+
+// function that sets denominator of Rational Number
+void Rational::SetDenominator(int aDenominator) {
+	if (aDenominator == 0) {
+		cout << "Error. Denominator cannot be zero. Setting it to 1.";
+		this->mDenominator = 1;
+	}
+	else
+		this->mDenominator = aDenominator;
+}
+// end function SetDenominator
+
+// function that sets the Rational Number
+void Rational::SetRational(int aNumerator, int aDenominator) {
+	this->SetNumerator(aNumerator);
+	this->SetDenominator(aDenominator);
+}
+// end function SetRational
+
+// overloaded function that sets the Rational Number
+void Rational::SetRational(const Rational& rRational) {
+	this->SetRational(rRational.GetNumerator(), rRational.GetDenominator());
+}
+// end function SetRational
+
+// function that gets numerator
+int Rational::GetNumerator()const {
+	return this->mNumerator;
+}
+// end function GetNumerator
+
+// function that gets denominator
+int Rational::GetDenominator()const {
+	return this->mDenominator;
+}
+// end function GetDenominator
+
+// function that gets Rational Number
+const Rational& Rational::GetRational()const {
+	return *this;
+}
+// end function GetRational
+
+
+/////////////////////////////// PRIVATE    ///////////////////////////////////
+
+// utility function that converts the rational into reduced form.
+void Rational::ReducedForm() {
+	int lDivisor = std::min(std::abs(this->GetNumerator()), std::abs(this->GetDenominator()));
+	for (int d = lDivisor; d > 1; --d) {
+		while ((this->GetNumerator()%d == 0) && (this->GetDenominator() %d == 0)) {
+			this->SetNumerator(this->GetNumerator() / d);
+			this->SetDenominator(this->GetDenominator() / d);
 		}
 	}
-
-}
-
-
-Rational Rational::Add(const Rational & rhs) {
-	Rational t;
-	t.numerator = (numerator*rhs.denominator) + (rhs.numerator*denominator);
-	t.denominator = denominator*rhs.denominator;
-	ReducedForm(t);
-	return t;
-}
-
-Rational Rational::Subtract(const Rational & rhs) {
-	Rational t;
-	t.numerator = (numerator*rhs.denominator) - (rhs.numerator*denominator);
-	t.denominator = denominator*rhs.denominator;
-	ReducedForm(t);
-	return t;
-}
-
-Rational Rational::Multiply(const Rational & rhs) {
-	Rational t;
-	t.numerator = numerator*rhs.numerator;
-	t.denominator = denominator*rhs.denominator;
-	ReducedForm(t);
-	return t;
-}
-
-Rational Rational::Divide(const Rational & rhs) {
-	Rational t;
-	t.numerator = numerator*rhs.denominator;
-	t.denominator = denominator*rhs.numerator;
-	ReducedForm(t);
-	return t;
 }
