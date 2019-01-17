@@ -1,8 +1,8 @@
 /**
-* @file Task2_main.cpp
+* @file Task3_main.cpp
 *
 * @brief This code implements operator oveloading
-* concepts in C++ using RationaNumber class.
+* concepts in C++ using RationalNumber class.
 *
 * @author Saif Ullah Ijaz
 *
