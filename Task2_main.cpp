@@ -1,7 +1,7 @@
 /**
 * @file Task3_main.cpp
 *
-* @brief This code implements operator oveloading
+* @brief This code implements operator overloading
 * concepts in C++ using RationalNumber class.
 *
 * @author Saif Ullah Ijaz
