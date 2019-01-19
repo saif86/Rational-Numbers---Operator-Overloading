@@ -1,4 +1,5 @@
 #include<algorithm>
+#include<string>
 #include "RationalNumber.h"  // class implemented
 using namespace std;
 
@@ -9,8 +10,17 @@ using namespace std;
 //============================= LIFECYCLE ====================================
 
 // RationalNumber Default + Overloaded Constructor
-RationalNumber::RationalNumber(int aNumerator, int aDenominator) : mNumerator(aNumerator), mDenominator(aDenominator) {
+RationalNumber::RationalNumber(int aNumerator, int aDenominator) {
 	this->SetRationalNumber(aNumerator, aDenominator);
+}
+// end RationalNumber constructor
+
+// Float Conversion Constructor
+RationalNumber::RationalNumber(float aFloatNumber) { 
+	int count = std::to_string(aFloatNumber).substr(std::to_string(aFloatNumber).find('.') + 1).length();
+	this->SetRationalNumber(int(aFloatNumber * (float)pow(10, count)), pow(10, count));
+
+	this->ReducedForm();
 }
 // end RationalNumber constructor
 
@@ -31,10 +41,12 @@ ostream& operator <<(ostream& rOs, const RationalNumber& rFrom) {
 
 // Stream Extraction
 istream& operator >>(istream& rIs, RationalNumber& rTo) {
+	int aNumerator, aDenominator;
 	cout << "Enter value for numerator: ";
-	rIs >> rTo.mNumerator;
+	rIs >> aNumerator;
 	cout << "Enter value for denominator: ";
-	rIs >> rTo.mDenominator;
+	rIs >> aDenominator;
+	rTo.SetRationalNumber(aNumerator, aDenominator);
 	rTo.ReducedForm();
 	return rIs;
 }
@@ -247,6 +259,49 @@ bool RationalNumber::operator >=(const RationalNumber & rhs) {
 }
 // end greater than or equal to operator.
 
+// Negation operator
+RationalNumber RationalNumber::operator -() { 
+	RationalNumber temp(-this->GetNumerator(), this->GetDenominator()); 
+	 
+	return temp; 
+}
+//end negation operator
+
+// pre-increment operator
+RationalNumber& RationalNumber::operator ++(){ 
+	*this += 1; 
+	return *this; 
+} 
+// end pre-increment operator
+
+// post-increment operator
+RationalNumber RationalNumber::operator ++(int){ 
+	RationalNumber t = *this; 
+	*this += 1; 
+	return t; 
+}
+// end post-increment operator
+
+// pre-decrement operator
+RationalNumber& RationalNumber::operator --(){ 
+	*this -= 1; 
+	return *this; 
+} 
+// end pre-decrement operator
+
+// post-decrement operator
+RationalNumber RationalNumber::operator --(int){ 
+	RationalNumber t = *this; 
+	*this -= 1; 
+	return t; 
+}
+// end post-decrement operator
+
+// Function operator to overload float
+RationalNumber::operator float() {
+	return float(this->GetNumerator()) / float(this->GetDenominator());
+}
+// end function operator
 
 //============================= OPERATIONS ===================================
 
@@ -277,8 +332,13 @@ void RationalNumber::SetDenominator(int aDenominator) {
 		cout << "Error. Denominator cannot be zero. Setting it to 1.";
 		this->mDenominator = 1;
 	}
-	else
-		this->mDenominator = aDenominator;
+	else {
+		if (aDenominator < 0)
+			this->SetNumerator(-1 * this->GetNumerator());
+			
+		this->mDenominator = abs(aDenominator);
+	}
+		
 }
 // end function SetDenominator
 
