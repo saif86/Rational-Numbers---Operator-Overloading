@@ -19,6 +19,10 @@ public:
 	*/
 	RationalNumber(int = 0, int = 1);
 
+	/** Float Conversion constructor.
+	*/
+	RationalNumber(float);
+
 	// Use compiler-generated copy constructor, assignment, and destructor.
 	// RationalNumber(const RationalNumber&);
 	// RationalNumber& operator=(const RationalNumber&);
@@ -263,6 +267,58 @@ public:
 	* @return True if greater than or equal to rhs, false otherwise.
 	*/
 	bool operator >= (const RationalNumber& rhs);
+
+	// UNARY OPERATORS
+	/** Negation operator.
+	*
+	* @param void.
+	*
+	* @return Negative of Rational Number.
+	*/
+	RationalNumber operator -();
+
+	// INCREMENT OPERATOR
+	/** pre-increment operator.
+	*
+	* @param void.
+	*
+	* @return reference to (updated) current object.
+	*/
+	RationalNumber& operator ++();
+
+	/** post-increment operator.
+	*
+	* @param dummy integer to overload increment operator.
+	*
+	* @return Incremented Rational Number.
+	*/
+	RationalNumber operator ++(int);
+
+	// DECREMENT OPERATOR
+	/** pre-decrement operator.
+	*
+	* @param void.
+	*
+	* @return reference to (updated) current object.
+	*/
+	RationalNumber& operator --();
+
+	/** post-decrement operator.
+	*
+	* @param dummy integer to overload decrement operator.
+	*
+	* @return Decremented Rational Number.
+	*/
+	RationalNumber operator --(int);
+
+	/** Function operator to overload float
+	* This converts rational number to float
+	*
+	* @param void.
+	*
+	* @return converted float equivalent.
+	*/
+	operator float();
 
 
 // OPERATIONS
